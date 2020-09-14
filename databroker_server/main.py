@@ -1,6 +1,7 @@
 import logging
 
 from fastapi import Depends, FastAPI, Header, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi.logger import logger
 
 from .routers import runs, users
@@ -16,6 +17,20 @@ app = FastAPI(
     title="DataBroker HTTP Server",
     description="The HTTP API server for the DataBroker project",
     version="0.0.1",
+)
+
+origins = [
+    "http://localhost:3000",
+    "https://localhost:3000",
+    "http://localhost",
+    "http://localhost:8080",
+]
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 
